@@ -2,6 +2,16 @@
 const form = document.getElementById("habit-form");
 const input = document.getElementById("habit-input");
 const list = document.getElementById("habit-list");
+const resetButton = document.getElementById("reset-button");
+
+resetButton.addEventListener("click", function () {
+  const sure = confirm("Delete all your habits and their history? This can't be undone.");
+  if (sure) {
+    habits = [];
+    localStorage.removeItem("habit-tracker:habits");
+    render();
+  }
+});
 
 // All our habits live in this array
 let habits = [];
@@ -82,12 +92,12 @@ function render() {
 
 // Save the habits array into the browser's storage
 function save() {
-  localStorage.setItem("habits", JSON.stringify(habits));
+  localStorage.setItem("habit-tracker:habits", JSON.stringify(habits));
 }
 
 // Load saved habits, if there are any
 function load() {
-  const saved = localStorage.getItem("habits");
+  const saved = localStorage.getItem("habit-tracker:habits");
   if (saved) {
     habits = JSON.parse(saved);
   }
